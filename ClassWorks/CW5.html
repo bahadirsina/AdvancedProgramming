@@ -1,0 +1,59 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+    <title>Event listeners C#5 </title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+    #url { width: 190px; }
+    span, #url { color: blue; }
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+
+  <h3 id=title title="Event listeners"></h3>
+
+  <h3>Battery Status</h3>
+  <p><span id=charging> ? </span></p> 
+  <p><span id=level>?</span></p> 
+
+  <h3>Online Status</h3>
+  <span id = on> ? </span>
+
+  <h3>Keyboard</h3>
+  <span id = key> ? </span>
+
+  <hr />
+  <b>Sample code</b>
+<pre id=sample>This text is not shown. Why?</pre>
+  <hr />
+
+<script>
+
+function check() {
+  fetch(url.value).then(r => 
+      resp.innerText = 'OK').catch(e => 
+      resp.innerText = "X" )
+}
+function init() {
+    navigator.getBattery().then(b => {
+        b.onchargingchange = () => charging.innerText = (b.charging ?  "Charging..." : "Discharging...")
+        b.onlevelchange = () => level.innerText = 100 * b.level + '%' })
+
+    ononline = () => on.innerText = "connected--online"
+    onoffline = () => on.innerText = "connected--offline"
+    onkeydown = (event) => key.innerText = event.key
+    onkeyup = (event) => key.innerText = event.key
+
+    check()
+}
+    title.innerText = document.title;
+    sample.innerText = init+'\n'+check;
+    init();
+</script>
+
+</body>
+</html>
