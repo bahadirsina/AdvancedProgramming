@@ -41,17 +41,18 @@ function check() {
 function init() {
     navigator.getBattery().then(b => {
         b.onchargingchange = () => charging.innerText = (b.charging ?  "Charging..." : "Discharging...")
-        b.onlevelchange = () => level.innerText = 100 * b.level + '%' })
+        b.onlevelchange = () => level.innerText = (b.level*100) +"%" })
 
     ononline = () => on.innerText = "connected--online"
     onoffline = () => on.innerText = "connected--offline"
-    onkeydown = (event) => key.innerText = event.key
-    onkeyup = (event) => key.innerText = event.key
-
+    
+    onkeydown = (event) => document.getElementById("key").innerText = event.key
+    onkeyup = (event) => document.getElementById("key").innerText = event.key
     check()
 }
     title.innerText = document.title;
     sample.innerText = init+'\n'+check;
+
     init();
 </script>
 
