@@ -14,7 +14,7 @@
         }
         .run{
             background: white;
-            width: 400px;
+            width: 500px;
             height: 150px;
             margin: auto;
         }
@@ -63,7 +63,7 @@
     <div class = "bosluk">
     </div>
     <div class = "run">
-        <canvas id = "cnv" height="150" weight = "400" ></canvas> 
+        <canvas id = "cnv" height="150" width = "500" ></canvas> 
     </div>
     <div class = "bosluk">
     </div>
@@ -78,7 +78,104 @@
         <a href="https://github.com/bahadirsina/AdvancedProgramming"> My Repository</a>
     </h3>
     <script>
- 
+     let canvas = document.getElementById("cnv");
+    let context = canvas.getContext("2d");
+    const nx = document.getElementById("next");
+    const pr = document.getElementById("previous");   
+    let fstart = false;
+    let fpause = false;
+    let fstop = false;
+    class raccoonMAN {
+        constructor(x, y, w, h) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.arr = []
+            this.idx = 0;
+        }
+    }
+    const rm = new raccoonMAN(0, 20, 110, 130);
+    async function addPhoto(rman, length) {
+            for (let i = 0; i < length; i++) {
+                let image = new Image();
+                image.src = await this.getPhoto(i);
+                rman.arr.push(image);
+            }
+        }
+        function getPhoto(index) {
+            return fetch("https://bahadirsina.github.io/AdvancedProgramming/PngPhotos/" + index.toString() + "sprite.png")
+                .then(r => r.blob())
+                .then(b => URL.createObjectURL(b))
+        }
+    async function run() {
+        await addPhoto(rm, 10);
+        context.drawImage(rm.arr[rm.idx], rm.x, rm.y, rm.w, rm.h);
+    }
 
+    function next() {
+        context.clearRect(rm.x, rm.y, rm.w, rm.h);
+        rm.idx = (rm.idx + 1) % rm.arr.length;
+            if ((500 - rm.w) < (rm.x + 20)) {
+                rm.x = 0;
+            } else{
+                rm.x += 20;
+            }
+        context.drawImage(rm.arr[rm.idx], rm.x, rm.y, rm.w, rm.h);
+    }
+    function previous() {
+        context.clearRect(rm.x, rm.y, rm.w, rm.h);
+            if (rm.idx > 0) {
+                rm.idx =  (rm.idx - 1) % rm.arr.length;
+            } else{
+                rm.idx = rm.arr.length - 1;
+            }
+            if (0 > (rm.x - 20)) {
+                rm.x = 500 - rm.w;
+            } else{
+                rm.x -= 20;
+            }
+        context.drawImage(rm.arr[rm.idx], rm.x, rm.y, rm.w, rm.h);
+    }
+    function start() {
+        fstart = true; fpause = false; fstop = false;
+        nx.disabled = true;
+        pr.disabled = true;
+    }
+    function pause() {
+        fstart = false; fstop = false;
+        if (!fpause) {
+            fpause = true;
+            nx.disabled = false;
+            pr.disabled = false;
+        } else {
+            fpause = false; fstart = true;
+            nx.disabled = true;
+            pr.disabled = true;
+        }
+    }
+    function stop() {
+        fpause = false; fstart = false;
+        if (!fstop) {
+            fstop = true;
+            nx.disabled = false;
+            pr.disabled = false;
+        } else {
+            fstop = false; fstart = true;
+        }
+    }
+    run();
+    setInterval( () =>{
+        if (fstart) {
+            next();
+            fpause = false; fstop = false;
+        }
+        if (fpause) {
+            fstart = false; fstop = false;
+        }
+        if (fstop) {         
+            fstart = false; fpause = false;
+        }
+    }, 120);
     </script>
 </body>
