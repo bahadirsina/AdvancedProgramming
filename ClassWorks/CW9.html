@@ -108,11 +108,34 @@ class Graph extends Menu {
     this.context.putImageData(id, 0, 0);
   }
   flipHorizontal() {
-    let fX = -1, fY = 1;
-    cx.translate(this.W, 0);
-    cx.scale(fX, fY);
-    cx.drawImage(this.image, 0,0);
-} 
+//    let fX = -1, fY = 1;
+//    cx.translate(this.W, 0);
+//    cx.scale(fX, fY);
+//    cx.drawImage(this.image, 0,0);
+      let position = this.context.getImageData(0, 0, this.W, this.H);
+      let i = 0;
+        while (i < this.H) {
+          let j = 0;
+          while (j < this.W / 2) {
+            var idx = (i * 4) * this.W;
+            var newW = (j * 4);
+            var nidx = idx + newW;
+            var idx2 = ((i + 1) * 4) * this.W;
+            var newW2=  ((j + 1) * 4);
+            var nidx2 = idx2 - newW2;
+            let k = 0;
+            while (k < 4) {
+              var temp = position.data[nidx + k];
+              position.data[nidx + k] = position.data[nidx2 + k];
+              position.data[nidx2 + k] = temp;
+              k++;
+            }
+            j++;
+          }
+          i++;
+        }
+        this.context.putImageData(position, 0, 0);
+      }
   grayscale() {
     let id = this.context.getImageData(0, 0, this.W, this.H);
     let data = id.data;
