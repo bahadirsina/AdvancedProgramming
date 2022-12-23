@@ -1,9 +1,3 @@
-const CACHE ='AP22'
-function installCB(e) {
-  console.log(CACHE, e);
-}
-addEventListener('install', installCB)
-
 function save(req, resp) {
   if (!req.url.includes("github")) 
      return resp;
