@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset = "UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Guess</title>
+    <link rel="icon" type ="image" href="flag icon2.png">
+    <style>
+        html {
+            margin: auto;
+        }
+        h1{
+            font-size: 70px;
+            color: blue;
+            text-align: center;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        h2{
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 20px;
+            text-align: center;
+        }
+        h3{
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: blue;
+            font-size: 18px;
+           
+        }
+        h4{
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: black;
+            font-size: 30px;
+            font-weight: 700;
+        }
+        p{
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 15px;
+            margin-left: 20px;
+        }
+       
+        .space{
+            width: 100px;
+            height: 30px;
+            margin: auto;
+        }
+        .space2{
+            width: 1px;
+            height: 1px;
+            margin: auto;
+        }
+        .space3{
+            width: 50px;
+            height: 60px;
+            margin: auto;
+        }
+        .space4{
+            width: 150px;
+            height: 70px;
+            margin: auto;
+        }
+        .space5{
+            width: 150px;
+            height: 50px;
+            margin: auto;
+        }
+        .space6{
+            width: 50px;
+            height: 20px;
+            margin: auto;
+        }
+        .ClssWrk1{
+            width: 400px;
+            height: 700px;
+            text-align: center;
+            background-color: white;
+            border-radius: 7%;
+            margin: auto;
+            opacity: 0.9;
+        }
+        .ClssWrk2{
+            width: 400px;
+            height: 750px;
+            text-align: center;
+            background-color: white;
+            border-radius: 7%;
+            margin: auto;
+            opacity: 1;
+            box-shadow: 0 0 10px 2px;
+        }
+
+        .strt {
+            background:white;
+            color: blue;
+            border-color: blue;
+            border-width: 6px;
+            width: 300px;
+            height: 100px;
+            text-align: center;
+            font-size: 50px;
+            font-weight: 600;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+            border-radius: 10px;
+            margin: auto;
+        }
+        .answer_list {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            background-image: url("./Dünya.jpg");
+            margin: auto;
+            top: 0;
+            left: 0;
+        }
+        .answer_list2 {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            background-image: url("./All flags.png");
+            margin: auto;
+            top: 0;
+            left: 0;
+        }
+        .btn{
+            background:white;
+            color: black;
+            border-color: black;
+            border-width: 4px;
+            width: 280px;
+            height: 55px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 600;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+            border-radius: 50px;
+            margin: auto;
+            gap: 100px;
+
+        }
+        .btnspace{
+            width: 10px;
+            height: 10px;
+            color:white ;
+        }
+        .flagdiv{
+            width: 300px;
+            height: 250px;
+            text-align: center;
+            margin: auto;
+
+        }
+        .count{
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: black;
+            font-size: 30px;
+            font-weight: 700;
+        }
+        #flagdiv img{
+
+          width: 100%;
+          border-width: 5px;
+          border-color: black;
+        }
+        img{
+          width: 100%;
+          border: 2px;
+          border-width: 5px;
+          border-color: black;
+        }
+        .btn-grid{
+          gap: 10px;
+          display: grid;
+        }
+        .next-btn{
+            background:#00BFFF;
+            color: black;
+            border-color: black;
+            border-width: 4px;
+            width: 150px;
+            height: 70px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 600;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+            border-radius: 5px;
+            margin: auto;
+        }
+        
+</style>
+</head>
+<body >
+<div id="welcomeDiv" style="display:none;" class="answer_list">
+    <div class = "space">
+    </div>
+    <div class="ClssWrk2" id = "CW2">
+        <div id="question-container" class="con">
+          <div class = "space5"></div>
+              <div class = "flagdiv" > 
+                <img id = "fg" src="" style="border:1px solid black;"> 
+              </div>
+            <div id="answer-buttons" class="btn-grid">
+              <button class="btn">Answer1</button>
+              <div class = "btnspace"> </div>
+              <button class="btn">Answer2</button>
+              <div class = "btnspace"> </div>
+              <button class="btn">Answer3</button>
+              <div class = "btnspace"> </div>
+              <button class="btn">Answer4</button>
+              <div class = "space6"> </div>
+          </div>
+          <div class = "space6"> </div>
+          <button id="next-btn" class="next-btn btn hide">Next</button>
+          <div style="width: 100%;">
+            <div style="width: 35%; height: 50px; float: left; "> 
+                <div class="count">Q: <span>0</span>/10</div>
+                </form>
+            </div>
+            <div style="margin-left: 55%; height: 50px;"> 
+                <h4>Score: <span>0</span></h4>
+                </form>  
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class = "space">
+</div>
+<div id="welcomeDiv2" style="display:block;" class="answer_list2">
+  <div class = "space">
+  </div>
+<div class = "ClssWrk1" id = "cw1">
+    <div class = "space2">
+    </div>
+    <h1>Let's guess the country flags!</h1>
+    <div class = "space3">
+    </div>
+    <button class = "strt"id = "btn" type="strt_button" name ="answer" value = "Show Div" onclick="startGame()">Start</button>
+    <div class = "space4">
+    </div>
+    <div style="width: 100%;">
+        <div style="width: 20%; height: 50px; float: left; "> 
+            <form target = "_blank" action="https://en.wikipedia.org/wiki/National_flag">
+                <input title="About National Flags" Name = info type = "Image" src="info icon -5.png" height="50" width="50" />
+            </form>
+        </div>
+        <div style="margin-left: 80%; height: 50px;"> 
+            <form target = "_blank" action="https://www.countries-ofthe-world.com/flags-of-the-world.html">
+                <input title="All Country Flags List" Name = flags  type = "Image" src="world2.png" height="50" width="50" />
+            </form>  
+        </div>
+        <h3>Made by BahadirSina</h3>
+    </div>
+</div>
+</div>
+<script>
+const flagImg = document.getElementById('fg');
+const answerButtonsElement = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-btn');
+let shuffledQuestions, currentQuestionIndex;
+
+nextButton.addEventListener('click', () => {
+  currentQIdx++;
+  if (currentQIdx >= 10) {
+  finish();
+  } else{
+  setNextQuestion();
+  }
+  
+})
+
+function startGame() {
+    let startDiv = document.getElementById("welcomeDiv");
+    let gameDiv = document.getElementById("welcomeDiv2");
+    startDiv.style.display = "block";
+    gameDiv.style.display = "none";
+    mixQuestions = questions.sort(() => Math.random()-.30);
+    currentQIdx = 0;
+    setNextQuestion();
+    
+}
+function setNextQuestion() {
+  resetState();
+  showQuestion(mixQuestions[currentQIdx]);
+  
+}
+function resetState() {
+  //var cw2d = document.getElementById("CW2");
+  //cw2d.innerHTML = "";
+  //clearStatusClass(document.body);
+  //nextButton.classList.add('hide');
+  while (answerButtonsElement.firstChild) {
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    
+  }
+}
+  function finish() {
+  var cw2d = document.getElementById("CW2");
+  cw2d.innerHTML = "";
+  clearStatusClass(document.body);
+  //nextButton.classList.add('hide');
+  while (answerButtonsElement.firstChild) {
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+  }
+}
+function showQuestion(question) {
+  flagImg.src = "Allflags/" + question.img;
+  question.answers.forEach(answer => {
+    const button = document.createElement('button');
+    button.innerText = answer.text;
+    button.classList.add('btn');
+    if (answer.correct) {
+      button.dataset.correct = answer.correct;
+    }
+    button.addEventListener('click', selectAnswer);
+    answerButtonsElement.appendChild(button);
+  })
+}
+function selectAnswer(e) {
+
+}
+const questions = [
+{
+    img: 'argentina.png',
+    answers: [
+      { text: 'Guatemala', correct: false },
+      { text: 'Argentina', correct: true },
+      { text: 'Uruguay', correct: false },
+      { text: 'Chile', correct: false }
+    ]
+  },
+  {
+    img: 'brazil.png',
+    answers: [
+      { text: 'Bolivia', correct: false },
+      { text: 'Chile', correct: false },
+      { text: 'Brazil', correct: true },
+      { text: 'Argentina', correct: false }
+    ]
+  },
+  {
+    img: 'canada.png',
+    answers: [
+      { text: 'Canada', correct: true },
+      { text: 'Egypt', correct: false },
+      { text: 'Tunisia', correct: false },
+      { text: 'USA', correct: false }
+    ]
+  },
+  {
+    img: 'egypt.png',
+    answers: [
+      { text: 'Syria', correct: false },
+      { text: 'Iraq', correct: false },
+      { text: 'Iran', correct: false },
+      { text: 'Egypt', correct: true }
+    ]
+  },{
+    img: 'germany.png',
+    answers: [
+      { text: 'Belgium', correct: false },
+      { text: 'Ireland', correct: false },
+      { text: 'Italy', correct: false },
+      { text: 'Germany', correct: true }
+    ]
+  },
+  {
+    img: 'iraq.png',
+    answers: [
+      { text: 'Iraq', correct: true },
+      { text: 'Syria', correct: false },
+      { text: 'Yemen', correct: false },
+      { text: 'Iran', correct: false }
+    ]
+  },{
+    img: 'lebanon.png',
+    answers: [
+      { text: 'Canada', correct: false },
+      { text: 'Morocco', correct: false },
+      { text: 'Lebanon', correct: true },
+      { text: 'Poland', correct: false }
+    ]
+  },
+  {
+    img: 'mexico.png',
+    answers: [
+      { text: 'Italy', correct: false },
+      { text: 'Iran', correct: false },
+      { text: 'Hungary', correct: false },
+      { text: 'Mexico', correct: true }
+    ]
+  },{
+    img: 'somalia.png',
+    answers: [
+      { text: 'Vietnam', correct: false },
+      { text: 'Albania', correct: false },
+      { text: 'Somalia', correct: true },
+      { text: 'Nigeria', correct: false }
+    ]
+  },
+  {
+    img: 'india.png',
+    answers: [
+      { text: 'India', correct: true },
+      { text: 'Hungary', correct: false },
+      { text: 'Pakistan', correct: false },
+      { text: 'Thailand', correct: false }
+    ]
+  },{
+    img: 'sudan.png',
+    answers: [
+      { text: 'Palestine', correct: false },
+      { text: 'UAE', correct: false },
+      { text: 'Iran', correct: false },
+      { text: 'Sudan', correct: true }
+    ]
+  },
+  {
+    img: 'saudi-arabia.png',
+    answers: [
+      { text: 'Kuwait', correct: false },
+      { text: 'Saudi Arabia', correct: true },
+      { text: 'Palestine', correct: false },
+      { text: 'Qatar', correct: false }
+    ]
+  },{
+    img: 'hongkong.png',
+    answers: [
+      { text: 'Hong Kong', correct: true },
+      { text: 'Haiti', correct: false },
+      { text: 'Taiwan', correct: false },
+      { text: 'Cambodia', correct: false }
+    ]
+  },
+  {
+    img: 'maldives.png',
+    answers: [
+      { text: 'Zambia', correct: false },
+      { text: 'Maldives', correct: true },
+      { text: 'Sri lanka', correct: false },
+      { text: 'Malaysia', correct: false }
+    ]
+  },{
+    img: 'monaco.png',
+    answers: [
+      { text: 'Malta', correct: false },
+      { text: 'Poland', correct: false },
+      { text: 'Monaco', correct: true },
+      { text: 'France', correct: false }
+    ]
+  },
+  {
+    img: 'jordan.png',
+    answers: [
+      { text: 'Jordan', correct: true },
+      { text: 'Palestine', correct: false },
+      { text: 'Sudan', correct: false },
+      { text: 'Lebanon', correct: false }
+    ]
+  },{
+    img: 'qatar.png',
+    answers: [
+      { text: 'Bahrain', correct: false },
+      { text: 'Lebanon', correct: false },
+      { text: 'UAE', correct: false },
+      { text: 'Qatar', correct: true }
+    ]
+  },
+  {
+    img: 'libya.png',
+    answers: [
+      { text: 'Algeria', correct: false },
+      { text: 'Madagascar', correct: false },
+      { text: 'Libya', correct: true },
+      { text: 'Tunusia', correct: false }
+    ]
+  },{
+    img: 'sweden.png',
+    answers: [
+      { text: 'Sweden', correct: true },
+      { text: 'Denmark', correct: false },
+      { text: 'Finland', correct: false },
+      { text: 'Norway', correct: false }
+    ]
+  },
+  {
+    img: 'bolivia.png',
+    answers: [
+      { text: 'Lithuania', correct: false },
+      { text: 'Benin', correct: false },
+      { text: 'Peru', correct: false },
+      { text: 'Bolivia', correct: true }
+    ]
+  },{
+    img: 'turkey.png',
+    answers: [
+      { text: 'Germany', correct: false },
+      { text: 'Turkey', correct: true },
+      { text: 'Tunisia', correct: false },
+      { text: 'China', correct: false }
+    ]
+  },
+  {
+    img: 'thailand.png',
+    answers: [
+      { text: 'Cambodia', correct: false },
+      { text: 'Vietnamese', correct: false },
+      { text: 'Thailand', correct: true },
+      { text: 'Myanmar', correct: false }
+    ]
+  },{
+    img: 'moldova.png',
+    answers: [
+      { text: 'Moldova', correct: true },
+      { text: 'Chad', correct: false },
+      { text: 'Andorra', correct: false },
+      { text: 'Ukraine', correct: false }
+    ]
+  },
+  {
+    img: 'colombia.png',
+    answers: [
+      { text: 'Ecvador', correct: false },
+      { text: 'Venezuela', correct: false },
+      { text: 'Colombia', correct: true },
+      { text: 'Uruguay', correct: false }
+    ]
+  },{
+    img: 'china.png',
+    answers: [
+      { text: 'Thailand', correct: false },
+      { text: 'Taiwan', correct: false },
+      { text: 'Turkey', correct: false },
+      { text: 'China', correct: true }
+    ]
+  },
+  {
+    img: 'nigeria.png',
+    answers: [
+      { text: 'Cameroon', correct: false },
+      { text: 'Ghana', correct: false },
+      { text: 'Morocco', correct: false },
+      { text: 'Nigeria', correct: true }
+    ]
+  },{
+    img: 'netherlands.png',
+    answers: [
+      { text: 'Luxembourg', correct: false },
+      { text: 'Belgium', correct: false },
+      { text: 'Netherlands', correct: true },
+      { text: 'Russia', correct: false }
+    ]
+  },
+  {
+    img: 'austria.png',
+    answers: [
+      { text: 'Hungary', correct: false },
+      { text: 'Austria', correct: true },
+      { text: 'Czech Republic', correct: false },
+      { text: 'Slovenia', correct: false }
+    ]
+  },{
+    img: 'serbia.png',
+    answers: [
+      { text: 'Slovakia', correct: false },
+      { text: 'Slovenia', correct: false },
+      { text: 'Serbia', correct: true },
+      { text: 'Syria', correct: false }
+    ]
+  },
+  {
+    img: 'turkmenistan.png',
+    answers: [
+      { text: 'Turkmenistan', correct: true },
+      { text: 'Uzbekistan', correct: false },
+      { text: 'Kazakhistan', correct: false },
+      { text: 'Tajikistan', correct: false }
+    ]
+  }
+  ]
+</script>
+</body>
+</html>
