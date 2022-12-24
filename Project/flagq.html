@@ -6,7 +6,7 @@
     <title>Flag Guess</title>
     <link rel="icon" href="flag icon5.png">
     <link rel="manifest" href="manifest2.json">
-  
+    <script>navigator.serviceWorker.register('sw.js')</script>
     <style>
         html {
             margin: auto;
@@ -89,6 +89,16 @@
             opacity: 1;
             box-shadow: 0 0 10px 2px;
         }
+        .ClssWrk3{
+            width: 400px;
+            height: 750px;
+            text-align: center;
+            background-color: white;
+            border-radius: 7%;
+            margin: auto;
+            opacity: 1;
+            box-shadow: 0 0 10px 2px;
+        }
 
         .strt {
             background:white;
@@ -140,6 +150,13 @@
             gap: 100px;
 
         }
+        .btn.correct{
+            background: #8afa6e;
+        }
+        .btn.wrong{
+            background: #fa4137;
+        }
+
         .btnspace{
             width: 10px;
             height: 10px;
@@ -188,14 +205,38 @@
             border-radius: 5px;
             margin: auto;
         }
+        .newgame{
+            background:white;
+            color: blue;
+            border-color: blue;
+            border-width: 4px;
+            width:250px;
+            height: 100px;
+            text-align: center;
+            font-size: 40px;
+            font-weight: 600;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+            border-radius: 5px;
+            margin: auto;
+        }
+        .hide{
+          display: none;
+        }
         
 </style>
 </head>
 <body >
-<div id="welcomeDiv" style="display:none;" class="answer_list">
+<div id="welcomeDiv" style="display:block;" class="answer_list">
     <div class = "space">
     </div>
-    <div class="ClssWrk2" id = "CW2">
+    <div class = "ClssWrk3" id = "CW3" style ="display: none;">
+      <div class = "space5">
+      </div>
+      <h1>GAME OVER!</h1>
+      <h1>YOUR SCORE: <span></span> </h1>
+      <button class = "newgame" id = "btn" type="newGame_button" onclick="startGame()">NEW GAME</button>
+    </div>
+    <div class="ClssWrk2" id = "CW2" style ="display: block;">
         <div id="question-container" class="con">
           <div class = "space5"></div>
               <div class = "flagdiv" > 
@@ -215,11 +256,11 @@
           <button id="next-btn" class="next-btn btn hide">Next</button>
           <div style="width: 100%;">
             <div style="width: 35%; height: 50px; float: left; "> 
-                <div class="count">Q: <span>0</span>/10</div>
+                <div class="count">Q:<span></span>/10</div>
                 </form>
             </div>
             <div style="margin-left: 55%; height: 50px;"> 
-                <h4>Score: <span>0</span></h4>
+                <h4>Score: <span></span></h4>
                 </form>  
             </div>
         </div>
@@ -259,10 +300,17 @@
 const flagImg = document.getElementById('fg');
 const answerButtonsElement = document.getElementById('answer-buttons');
 const nextButton = document.getElementById('next-btn');
-let shuffledQuestions, currentQuestionIndex;
-
+let gameScreen = document.getElementById("CW2");
+let gameOver = document.getElementById("CW3");
+let countSpan = document.querySelector('.count span');
+let scoreSpan = document.querySelector('h4 span');
+let endScoreSpan = document.querySelector('h1 span');
+let mixQuestions, currentQIdx;
+let Qidx = 0;
+let scr = 0;
 nextButton.addEventListener('click', () => {
   currentQIdx++;
+  Qidx +=1;
   if (currentQIdx >= 10) {
   finish();
   } else{
@@ -270,16 +318,18 @@ nextButton.addEventListener('click', () => {
   }
   
 })
-
 function startGame() {
     let startDiv = document.getElementById("welcomeDiv");
     let gameDiv = document.getElementById("welcomeDiv2");
     startDiv.style.display = "block";
     gameDiv.style.display = "none";
+    gameScreen.style.display = "block";
+    gameOver.style.display = "none";
     mixQuestions = questions.sort(() => Math.random()-.30);
     currentQIdx = 0;
+    scr = 0;
+    Qidx = 1;
     setNextQuestion();
-    
 }
 function setNextQuestion() {
   resetState();
@@ -290,22 +340,26 @@ function resetState() {
   //var cw2d = document.getElementById("CW2");
   //cw2d.innerHTML = "";
   //clearStatusClass(document.body);
-  //nextButton.classList.add('hide');
+  nextButton.classList.add('hide');
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild);
-    
   }
 }
   function finish() {
-  var cw2d = document.getElementById("CW2");
-  cw2d.innerHTML = "";
-  clearStatusClass(document.body);
+  //var cw2d = document.getElementById("CW2");
+  //cw2d.innerHTML = "";
+  //clearStatusClass(document.body);
+  gameScreen.style.display = "none";
+  gameOver.style.display = "block";
+  endScoreSpan.innerHTML = scr;
   //nextButton.classList.add('hide');
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild)
   }
 }
 function showQuestion(question) {
+  countSpan.innerHTML = Qidx; // Her ekrana soru gösterildiğinde değer artmaktadır.
+  scoreSpan.innerHTML = scr;
   flagImg.src = "Allflags/" + question.img;
   question.answers.forEach(answer => {
     const button = document.createElement('button');
@@ -319,8 +373,30 @@ function showQuestion(question) {
   })
 }
 function selectAnswer(e) {
-
+  const selectedButton = e.target;
+  let correct = selectedButton.dataset.correct;
+  if (correct) {
+    scr+=50;
+  }
+    setStatusClass(selectedButton, selectedButton.dataset.correct);
+  if (mixQuestions.length > currentQIdx + 1) {
+    nextButton.classList.remove('hide');
+  } 
 }
+function setStatusClass(element, correct) {
+  clearStatusClass(element)
+  if (correct) {
+    element.classList.add('correct');
+  } else {
+    element.classList.add('wrong');
+  }
+}
+
+function clearStatusClass(element) {
+  element.classList.remove('correct')
+  element.classList.remove('wrong')
+}
+
 const questions = [
 {
     img: 'argentina.png',
