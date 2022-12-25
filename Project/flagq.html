@@ -102,7 +102,24 @@
             border-radius: 7%;
             margin: auto;
             opacity: 1;
-
+        }
+        .ClssWrk4{
+            width: 370px;
+            height: 680px;
+            text-align: center;
+            background-color: white;
+            border-radius: 7%;
+            margin: auto;
+            opacity: 1;
+        }
+        .ClssWrk5{
+            width: 370px;
+            height: 680px;
+            text-align: center;
+            background-color: white;
+            border-radius: 7%;
+            margin: auto;
+            opacity: 1;
         }
 
         .strt {
@@ -169,7 +186,6 @@
             height: 250px;
             text-align: center;
             margin: auto;
-
         }
         .count{
             font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -177,18 +193,7 @@
             font-size: 30px;
             font-weight: 700;
         }
-        #flagdiv img{
-
-          width: 100%;
-          border-width: 5px;
-          border-color: black;
-        }
-        img{
-          width: 100%;
-          border: 2px;
-          border-width: 5px;
-          border-color: black;
-        }
+        
         .btn-grid{
           gap: 10px;
           display: grid;
@@ -222,13 +227,26 @@
             margin: auto;
         }
         .hide{
-          display: none;
+            display: none;
         }
         body {
-          margin: 0;
-          padding: 0;
-          height: 100%;
+            margin: 0;
+            padding: 0;
+            height: 100%;
         }
+        .tik{
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            margin: auto;
+        }
+        .cross{
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            margin: auto;
+        }
+
 </style>
 </head>
 <body background="All flags.png">
@@ -237,7 +255,7 @@
       <div class = "space5">
       </div>
       <h1>GAME OVER!</h1>
-      <h1>YOUR SCORE: <span></span> </h1>
+      <h1>TRUE ANSWERS: <span></span>/10</h1>
       <button class = "newgame" id = "btn" type="newGame_button" onclick="startGame()">NEW GAME</button>
     </div>
     <div class="ClssWrk2" id = "CW2" style ="display: hide;">
@@ -264,7 +282,7 @@
                 </form>
             </div>
             <div style="margin-left: 55%; height: 50px;"> 
-                <h4>Score: <span></span></h4>
+                <h4>True: <span></span>/10</h4>
                 </form>  
             </div>
         </div>
@@ -305,6 +323,7 @@ let gameOver = document.getElementById("CW3");
 let countSpan = document.querySelector('.count span');
 let scoreSpan = document.querySelector('h4 span');
 let endScoreSpan = document.querySelector('h1 span');
+let curImg;
 let mixQuestions, currentQIdx;
 let Qidx = 0;
 let scr = 0;
@@ -316,7 +335,6 @@ nextButton.addEventListener('click', () => {
   } else{
   setNextQuestion();
   }
-  
 })
 function startGame() {
     let startDiv = document.getElementById("welcomeDiv");
@@ -359,9 +377,11 @@ function resetState() {
   }
 }
 function showQuestion(question) {
+  flagImg.style.border ="1px solid black";
   countSpan.innerHTML = Qidx; // Her ekrana soru gösterildiğinde değer artmaktadır.
   scoreSpan.innerHTML = scr;
-  flagImg.src = "Allflags/" + question.img;
+  curImg = "Allflags/" + question.img;
+  flagImg.src = curImg;
   question.answers.forEach(answer => {
     const button = document.createElement('button');
     button.innerText = answer.text;
@@ -372,21 +392,34 @@ function showQuestion(question) {
     button.addEventListener('click', selectAnswer);
     answerButtonsElement.appendChild(button);
   })
-}
+} 
+
 function selectAnswer(e) {
   const selectedButton = e.target;
   let correct = selectedButton.dataset.correct;
   if (correct) {
-    scr+=50;
+    scr+=1;
+    flagImg.style.border ="none";
+    changeImg("tik.png");
+    setTimeout(changeImg, 500,curImg);
+  }   else {
+    flagImg.style.border ="none";
+    changeImg("cross.png");
+    setTimeout(changeImg, 500,curImg);
   }
   setStatusClass(selectedButton, selectedButton.dataset.correct);
+  for (let s = 0; s < 4; s++) {
+    if (answerButtonsElement.children[s].dataset.correct) {
+      answerButtonsElement.children[s].classList.add('correct');
+    }
+  }
   Array.from(answerButtonsElement.children).forEach(button => {
     button.disabled = true;
   })
   if (mixQuestions.length > currentQIdx + 1) {
-    nextButton.classList.remove('hide');
+    setTimeout(removeim, 500);
+//    nextButton.classList.remove('hide');
   } 
-
 
 }
 function setStatusClass(element, correct) {
@@ -399,8 +432,15 @@ function setStatusClass(element, correct) {
 }
 
 function clearStatusClass(element) {
-  element.classList.remove('correct')
-  element.classList.remove('wrong')
+  element.classList.remove('correct');
+  element.classList.remove('wrong');
+}
+
+function changeImg(imgName) {
+  flagImg.src = imgName;
+}
+function removeim() {
+  nextButton.classList.remove('hide');
 }
 
 const questions = [
@@ -640,7 +680,7 @@ const questions = [
     answers: [
       { text: 'Hungary', correct: false },
       { text: 'Austria', correct: true },
-      { text: 'Czech Republic', correct: false },
+      { text: 'Czech Rep.', correct: false },
       { text: 'Slovenia', correct: false }
     ]
   },{
