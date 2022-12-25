@@ -2,7 +2,7 @@ const cacheName = 'CACHE';
 self.addEventListener("install", e => {
     e.waitUntil(
         caches.open(cacheName).then(cache => {
-            return cache.addAll(["./", "flag icon5.png"]);
+            return cache.addAll(["./"]);
         })
     );
 });
