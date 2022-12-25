@@ -1,16 +1,21 @@
-function save(req, resp) {
-  return caches.open(CACHE)
-  .then(cache => {
-    cache.put(req, resp.clone());
-    return resp;
-  }) 
-  .catch(console.log)
-}
-function fetchCB(e) { //fetch first
-  let req = e.request
-  e.respondWith(
-    fetch(req).then(r2 => save(req, r2))
-    .catch(() => { return caches.match(req).then(r1 => r1) })
-  )
-}
-self.addEventListener('fetch', fetchCB)
+const cacheName = 'CACHE';
+self.addEventListener("install", e => {
+    e.waitUntil(
+        caches.open(cacheName).then(cache => {
+            return cache.addAll(["./", "flag icon5.png"]);
+        })
+    );
+});
+self.addEventListener("activate", e => {
+    console.log('Service worker activate event!');
+});
+self.addEventListener("fetch", e => {
+    e.respondWith(
+        caches.match(e.request).then(response => {
+            if(response){
+                return response;
+            }
+            return fetch(e.request);
+        }),
+    );
+});
