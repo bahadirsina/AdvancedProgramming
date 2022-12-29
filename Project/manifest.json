@@ -1,0 +1,14 @@
+{
+    "name": "FlagGuessQuiz",
+    "start_url": "flagq.html",
+    "display": "standalone",
+    "background_color": "#cef",
+    "theme-color": "#cef" ,
+    "icons": [
+      {
+        "src": "flag icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

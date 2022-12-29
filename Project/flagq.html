@@ -3,9 +3,12 @@
 <head>
     <meta charset = "UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#eaeade" />
+    <link rel="apple-touch-icon" href="flag icon5.png" />
     <title>Flag Guess</title>
     <link rel="icon" href="flag icon5.png">
-    <link rel="manifest" href="manifest2.json">
+    <link rel="manifest" href="manifest.json">
+    <script>navigator.serviceWorker.register('sw.js')</script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body background="All flags.png">
@@ -463,6 +466,5 @@ const questions = [
   }
   ]
 </script>
-<script src = "service.js"></script>
 </body>
 </html>
